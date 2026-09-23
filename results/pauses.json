@@ -1,0 +1,7 @@
+{
+  "commits_from_an_old_worker": 0,
+  "old_worker_lost_its_sessions": 0,
+  "old_worker_refused_by_epoch": 50,
+  "seconds": 153,
+  "tries": 50
+}

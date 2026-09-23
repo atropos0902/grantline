@@ -1,0 +1,6 @@
+{
+  "differences": 0,
+  "seconds": 296,
+  "tries": 5,
+  "without_the_wait": "stopped: target and source have diverged: the target is at 0/88C8E10 and the new primary left timeline 1 at 0/3FF3A68"
+}

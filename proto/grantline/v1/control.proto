@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+package grantline.v1;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+// ControlService is served by each worker for its own replication.
+service ControlService {
+  rpc GetStatus(GetStatusRequest) returns (GetStatusResponse) {}
+  // Sends the status about once a second until the client goes away.
+  rpc WatchStatus(WatchStatusRequest) returns (stream WatchStatusResponse) {}
+  rpc ListChunks(ListChunksRequest) returns (ListChunksResponse) {}
+  // Everything that happened to one key: changes, chunk reads, refusals.
+  rpc ExplainKey(ExplainKeyRequest) returns (ExplainKeyResponse) {}
+  rpc Pause(PauseRequest) returns (PauseResponse) {}
+  rpc Resume(ResumeRequest) returns (ResumeResponse) {}
+  // Runs the schema change that is waiting. The statement has to match.
+  rpc ApproveSchemaChange(ApproveSchemaChangeRequest) returns (ApproveSchemaChangeResponse) {}
+}
+
+enum Phase {
+  PHASE_UNSPECIFIED = 0;
+  PHASE_NEW = 1;
+  PHASE_COPYING = 2;
+  PHASE_READY = 3;
+}
+
+message Status {
+  string replication = 1;
+  Phase phase = 2;
+  int64 epoch = 3;
+  string applied_lsn = 4;
+  string source_lsn = 5;
+  google.protobuf.Duration lag = 6;
+  google.protobuf.Timestamp last_heartbeat = 7;
+  int32 chunks = 8;
+  int32 chunks_landed = 9;
+  int64 rows_copied = 10;
+  int64 rows_refused = 11;
+  int64 keys_reread = 12;
+  int64 changes = 13;
+  int64 spilled_transactions = 14;
+  uint64 commits = 15;
+  uint64 yields = 16;
+  bool paused = 17;
+  string waiting_statement = 18;
+  // Why the replication isn't running, empty when it is.
+  string failure = 19;
+  int64 retained_log_bytes = 20;
+}
+
+message GetStatusRequest {}
+message GetStatusResponse {
+  Status status = 1;
+}
+message WatchStatusRequest {}
+message WatchStatusResponse {
+  Status status = 1;
+}
+
+message Chunk {
+  string table = 1;
+  int32 number = 2;
+  repeated string lo = 3;
+  repeated string hi = 4;
+  bool landed = 5;
+  string snapshot = 6;
+  int64 rows = 7;
+  int64 refused = 8;
+  uint32 crc32c = 9;
+}
+message ListChunksRequest {
+  string table = 1;
+}
+message ListChunksResponse {
+  repeated Chunk chunks = 1;
+}
+
+message ExplainKeyRequest {
+  string table = 1;
+  repeated string key = 2;
+}
+message Step {
+  google.protobuf.Timestamp at = 1;
+  // insert, update, delete, truncate, chunk, refused
+  string what = 2;
+  uint64 xid = 3;
+  string lsn = 4;
+  string snapshot = 5;
+  int32 chunk = 6;
+  int64 epoch = 7;
+  string reason = 8;
+}
+message ExplainKeyResponse {
+  repeated Step steps = 1;
+  // The row in the target as JSON, empty when there is none.
+  string target_row = 2;
+  string source_row = 3;
+}
+
+message PauseRequest {}
+message PauseResponse {}
+message ResumeRequest {}
+message ResumeResponse {}
+message ApproveSchemaChangeRequest {
+  string statement = 1;
+}
+message ApproveSchemaChangeResponse {}

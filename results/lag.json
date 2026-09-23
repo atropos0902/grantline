@@ -1,0 +1,9 @@
+{
+  "changes_per_second": 4990,
+  "delay_each_way_ms": 40,
+  "max_ms": 582.977,
+  "p50_ms": 43.459,
+  "p99_ms": 62.966,
+  "revokes_timed": 2476,
+  "seconds": 78
+}

@@ -1,0 +1,11 @@
+colorama==0.4.6 ; sys_platform == 'win32'
+hypothesis==6.152.4
+iniconfig==2.3.0
+packaging==26.2
+pluggy==1.6.0
+psycopg==3.3.4
+psycopg-binary==3.3.4 ; implementation_name != 'pypy'
+pygments==2.20.0
+pytest==9.0.3
+sortedcontainers==2.4.0
+tzdata==2026.2 ; sys_platform == 'win32'

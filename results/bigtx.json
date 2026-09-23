@@ -1,0 +1,9 @@
+{
+  "applied_s": 55.578584715,
+  "killed_for_memory": false,
+  "limit_mib": 512,
+  "peak_resident_mib": 72,
+  "rows": 5000000,
+  "seconds": 60,
+  "source_s": 8.487320453
+}

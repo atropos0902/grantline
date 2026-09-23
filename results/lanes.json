@@ -1,0 +1,19 @@
+{
+  "changes": 400000,
+  "seconds": 133,
+  "target_round_trip_0ms": {
+    "four_lanes_changes_per_s": 59989,
+    "four_lanes_s": 6.667849916,
+    "one_lane_s": 12.736524661,
+    "same_rows": true,
+    "times": 1.910139673425727
+  },
+  "target_round_trip_5ms": {
+    "four_lanes_changes_per_s": 28097,
+    "four_lanes_s": 14.236006092,
+    "one_lane_s": 30.34105951,
+    "same_rows": true,
+    "times": 2.131290146542598
+  },
+  "transactions": 40000
+}
