@@ -1,0 +1,11 @@
+image: grantline:dev
+pullPolicy: IfNotPresent
+# NATS URL for events. Empty leaves them off; replication doesn't need them.
+nats: ""
+console:
+  enabled: true
+  # Replications to show, in the release's namespace.
+  replications: []
+resources:
+  requests: {cpu: 50m, memory: 64Mi}
+  limits: {memory: 256Mi}

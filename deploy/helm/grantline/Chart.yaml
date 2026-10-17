@@ -1,0 +1,6 @@
+apiVersion: v2
+name: grantline
+description: Operator and console for access grants replication
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

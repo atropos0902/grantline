@@ -1,0 +1,76 @@
+# Two data centers on one machine. The source is in the first, everything else in
+# the second, and the proxy between them adds 40 ms each way.
+name: grantline
+
+x-postgres: &postgres
+  image: postgres:18.3
+  environment: {POSTGRES_HOST_AUTH_METHOD: trust}
+  healthcheck: {test: ["CMD", "pg_isready", "-U", "postgres", "-h", "127.0.0.1"], interval: 1s, timeout: 2s, retries: 60}
+
+x-grantline: &grantline
+  image: grantline:dev
+  build: {context: ., target: grantline}
+  restart: unless-stopped
+
+services:
+  primary:
+    <<: *postgres
+    command: postgres -c wal_level=logical -c synchronized_standby_slots=sb -c max_slot_wal_keep_size=2GB -c max_wal_size=256MB
+    volumes: ["./deploy/compose/primary.sh:/docker-entrypoint-initdb.d/primary.sh:ro"]
+  standby:
+    <<: *postgres
+    user: postgres
+    entrypoint: ["bash", "/standby.sh"]
+    volumes: ["./deploy/compose/standby.sh:/standby.sh:ro"]
+    depends_on: {primary: {condition: service_healthy}}
+  target:
+    <<: *postgres
+    command: postgres -c max_wal_size=256MB
+  kafka:
+    image: apache/kafka-native:4.2.0
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+  nats:
+    image: nats:2.12.8-alpine
+    command: ["-js", "-sd", "/data"]
+  proxy:
+    image: ghcr.io/shopify/toxiproxy:2.12.0
+    command: ["-host=0.0.0.0", "-config=/proxies.json"]
+    volumes: ["./deploy/compose/proxies.json:/proxies.json:ro"]
+  delay:
+    image: nats:2.12.8-alpine # only for its shell and wget
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        until wget -qO- http://proxy:8474/version >/dev/null; do sleep 1; done
+        for p in primary standby; do for s in upstream downstream; do
+          wget -qO- --header 'content-type: application/json' --post-data "{\"type\":\"latency\",\"stream\":\"$$s\",\"attributes\":{\"latency\":40}}" http://proxy:8474/proxies/$$p/toxics
+        done; done
+    depends_on: [proxy]
+  loadgen:
+    <<: *grantline
+    entrypoint: ["loadgen", "-dsn", "postgres://postgres@primary,standby/postgres?sslmode=disable&target_session_attrs=read-write", "-rows", "50000"]
+    depends_on: {primary: {condition: service_healthy}}
+  copy:
+    <<: *grantline
+    command: ["run", "-config", "/c/copy.yaml"]
+    volumes: ["./deploy/compose:/c:ro"]
+    depends_on: {primary: {condition: service_healthy}, target: {condition: service_healthy}, loadgen: {condition: service_started}}
+  events:
+    <<: *grantline
+    command: ["run", "-config", "/c/events.yaml"]
+    volumes: ["./deploy/compose:/c:ro"]
+    depends_on: {primary: {condition: service_healthy}, kafka: {condition: service_started}, loadgen: {condition: service_started}}
+  console:
+    <<: *grantline
+    command: ["serve", "-console", "/console", "-nats", "nats://nats:4222", "-worker", "copy=http://copy:7400", "-worker", "events=http://events:7400"]
+    ports: ["127.0.0.1:8080:8080"]

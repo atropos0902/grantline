@@ -1,0 +1,40 @@
+goos: linux
+goarch: amd64
+pkg: grantline/test/integration
+cpu: AMD Ryzen 9 5950X 16-Core Processor            
+BenchmarkApplyGroup-4   	     560	   4534673 ns/op	     55131 changes/s	  437211 B/op	    5145 allocs/op
+goos: linux
+goarch: amd64
+pkg: grantline/test/integration
+cpu: AMD Ryzen 9 5950X 16-Core Processor            
+BenchmarkApplyGroup-4   	     462	   5505629 ns/op	     45408 changes/s	  437201 B/op	    5145 allocs/op
+goos: linux
+goarch: amd64
+pkg: grantline/test/integration
+cpu: AMD Ryzen 9 5950X 16-Core Processor            
+BenchmarkApplyGroup-4   	     442	   5059999 ns/op	     49407 changes/s	  437212 B/op	    5145 allocs/op
+goos: linux
+goarch: amd64
+pkg: grantline/test/integration
+cpu: AMD Ryzen 9 5950X 16-Core Processor            
+BenchmarkApplyGroup-4   	     618	   5389319 ns/op	     46388 changes/s	  437196 B/op	    5145 allocs/op
+goos: linux
+goarch: amd64
+pkg: grantline/test/integration
+cpu: AMD Ryzen 9 5950X 16-Core Processor            
+BenchmarkApplyGroup-4   	     547	   5553435 ns/op	     45017 changes/s	  437195 B/op	    5145 allocs/op
+goos: linux
+goarch: amd64
+pkg: grantline/test/integration
+cpu: AMD Ryzen 9 5950X 16-Core Processor            
+BenchmarkApplyGroup-4   	     445	   5696415 ns/op	     43887 changes/s	  437201 B/op	    5145 allocs/op
+goos: linux
+goarch: amd64
+pkg: grantline/test/integration
+cpu: AMD Ryzen 9 5950X 16-Core Processor            
+BenchmarkApplyGroup-4   	     582	   5526659 ns/op	     45235 changes/s	  437200 B/op	    5145 allocs/op
+goos: linux
+goarch: amd64
+pkg: grantline/test/integration
+cpu: AMD Ryzen 9 5950X 16-Core Processor            
+BenchmarkApplyGroup-4   	     422	   4963160 ns/op	     50371 changes/s	  437206 B/op	    5145 allocs/op

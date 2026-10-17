@@ -1,0 +1,25 @@
+Type: alloc_objects
+Showing nodes accounting for 22018869, 98.25% of 22410656 total
+Dropped 229 nodes (cum <= 112053)
+Showing top 20 nodes out of 31
+      flat  flat%   sum%        cum   cum%
+   3883157 17.33% 17.33%    6389973 28.51%  grantline/test/integration.body (inline)
+   3719395 16.60% 33.92%   10861907 48.47%  grantline/internal/txn.(*Txn).one
+   2816402 12.57% 46.49%    2816402 12.57%  grantline/internal/txn.(*Txn).Add
+   1933341  8.63% 55.12%    1933341  8.63%  grantline/internal/source.(*Table).FullName (inline)
+   1933341  8.63% 63.74%    1933341  8.63%  grantline/internal/target/pgtarget.(*plan).keyText
+   1753141  7.82% 71.57%    1753141  7.82%  encoding/binary.bigEndian.AppendUint32 (inline)
+   1409045  6.29% 77.86%    1409045  6.29%  internal/strconv.FormatUint
+    851981  3.80% 81.66%     851981  3.80%  fmt.Sprint
+    798732  3.56% 85.22%   22327209 99.63%  grantline/test/integration.BenchmarkApplyGroup
+    753675  3.36% 88.58%     753675  3.36%  encoding/binary.bigEndian.AppendUint16 (inline)
+    682237  3.04% 91.63%     682237  3.04%  grantline/internal/target/pgtarget.(*plan).touch
+    357525  1.60% 93.22%    1897644  8.47%  grantline/internal/target/pgtarget.(*notes).add
+    297928  1.33% 94.55%     297928  1.33%  grantline/internal/txn.New (inline)
+    250515  1.12% 95.67%     250515  1.12%  grantline/internal/target/pgtarget.quote[go.shape.[]uint8] (inline)
+    226988  1.01% 96.68%     477503  2.13%  grantline/internal/target/pgtarget.appendElem (inline)
+    161097  0.72% 97.40%     638600  2.85%  grantline/internal/target/pgtarget.(*piece).inRun
+    131074  0.58% 97.99%     131074  0.58%  grantline/internal/lsn.LSN.String (inline)
+     53834  0.24% 98.23%    2673599 11.93%  grantline/internal/target/pgtarget.(*Target).Item
+      5461 0.024% 98.25%     152248  0.68%  grantline/internal/target/pgtarget.(*piece).flush
+         0     0% 98.25%     702720  3.14%  grantline/internal/target/pgtarget.(*Target).Item.func1

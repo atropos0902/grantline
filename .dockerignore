@@ -1,0 +1,7 @@
+bin
+results
+console/node_modules
+console/dist
+checker/.venv
+**/.git
+**/__pycache__

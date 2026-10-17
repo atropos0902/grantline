@@ -1,0 +1,9 @@
+name: events
+source:
+  dsn: "postgres://postgres@proxy:5001,proxy:5002/postgres?sslmode=disable&target_session_attrs=read-write&connect_timeout=3"
+  publication: grants_pub
+target: {kind: kafka, brokers: ["kafka:9092"], prefix: "grants."}
+spillDir: /spill
+heartbeat: 250ms
+listen: ":7400"
+nats: nats://nats:4222

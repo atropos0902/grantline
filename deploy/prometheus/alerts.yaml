@@ -1,0 +1,23 @@
+groups:
+  - name: grantline
+    rules:
+      - alert: RevokesAreLate
+        expr: grantline_lag_seconds > 1
+        for: 30s
+        labels: {severity: page}
+        annotations: {summary: "{{ $labels.replication }} is {{ $value | humanizeDuration }} behind. See docs/runbook.md#late"}
+      - alert: ReplicationStopped
+        expr: grantline_up == 0
+        for: 1m
+        labels: {severity: page}
+        annotations: {summary: "{{ $labels.replication }} isn't running. See docs/runbook.md#stopped"}
+      - alert: SlotIsFillingTheDisk
+        expr: grantline_retained_log_bytes > 1e9
+        for: 5m
+        labels: {severity: page}
+        annotations: {summary: "The source keeps {{ $value | humanize1024 }}B of log for {{ $labels.replication }}. See docs/runbook.md#slot"}
+      - alert: SchemaChangeIsWaiting
+        expr: grantline_paused == 1
+        for: 5m
+        labels: {severity: ticket}
+        annotations: {summary: "{{ $labels.replication }} is paused. See docs/runbook.md#schema"}

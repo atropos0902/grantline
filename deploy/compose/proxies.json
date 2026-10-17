@@ -1,0 +1,4 @@
+[
+  {"name": "primary", "listen": "0.0.0.0:5001", "upstream": "primary:5432", "enabled": true},
+  {"name": "standby", "listen": "0.0.0.0:5002", "upstream": "standby:5432", "enabled": true}
+]

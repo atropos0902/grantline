@@ -1,0 +1,66 @@
+Type: cpu
+Duration: 23.21s, Total samples = 4.24s (18.27%)
+Showing nodes accounting for 1.45s, 34.20% of 4.24s total
+Dropped 197 nodes (cum <= 0.02s)
+Showing top 60 nodes out of 189
+      flat  flat%   sum%        cum   cum%
+         0     0%     0%      2.40s 56.60%  testing.(*B).run1.func1
+         0     0%     0%      2.40s 56.60%  testing.(*B).runN
+     0.02s  0.47%  0.47%      2.38s 56.13%  grantline/test/integration.BenchmarkApplyGroup
+         0     0%  0.47%      1.47s 34.67%  grantline/internal/target/pgtarget.(*groupWork).Prepare
+         0     0%  0.47%      1.41s 33.25%  grantline/internal/txn.(*Txn).Each
+     0.03s  0.71%  1.18%      1.41s 33.25%  grantline/internal/txn.(*Txn).one
+         0     0%  1.18%      1.23s 29.01%  runtime.systemstack
+         0     0%  1.18%      0.96s 22.64%  grantline/internal/target/pgtarget.(*groupWork).Prepare.func1
+     0.02s  0.47%  1.65%      0.96s 22.64%  grantline/internal/target/pgtarget.(*piece).add
+         0     0%  1.65%      0.91s 21.46%  runtime.gcBgMarkWorker
+         0     0%  1.65%      0.87s 20.52%  runtime.gcBgMarkWorker.func2
+         0     0%  1.65%      0.87s 20.52%  runtime.gcDrain
+         0     0%  1.65%      0.82s 19.34%  grantline/internal/target/pgtarget.(*piece).update
+     0.07s  1.65%  3.30%      0.82s 19.34%  runtime.mallocgc
+     0.02s  0.47%  3.77%      0.63s 14.86%  runtime.bgsweep
+         0     0%  3.77%      0.62s 14.62%  runtime.gcDrainMarkWorkerIdle (inline)
+     0.02s  0.47%  4.25%      0.45s 10.61%  runtime.growslice
+         0     0%  4.25%      0.43s 10.14%  grantline/internal/target/pgtarget.(*piece).note
+         0     0%  4.25%      0.41s  9.67%  grantline/internal/target/pgtarget.(*piece).flush
+         0     0%  4.25%      0.35s  8.25%  grantline/internal/target/pgtarget.(*Target).Item
+     0.14s  3.30%  7.55%      0.35s  8.25%  runtime.scanObject
+     0.02s  0.47%  8.02%      0.34s  8.02%  grantline/internal/target/pgtarget.(*piece).noted
+     0.01s  0.24%  8.25%      0.32s  7.55%  grantline/internal/target/pgtarget.(*notes).add
+     0.01s  0.24%  8.49%      0.32s  7.55%  grantline/internal/target/pgtarget.(*piece).upsert
+         0     0%  8.49%      0.32s  7.55%  runtime.markroot
+         0     0%  8.49%      0.30s  7.08%  runtime.unlock (inline)
+     0.22s  5.19% 13.68%      0.30s  7.08%  runtime.unlock2
+         0     0% 13.68%      0.30s  7.08%  runtime.unlockWithRank (inline)
+         0     0% 13.68%      0.29s  6.84%  runtime.scanSpan
+     0.01s  0.24% 13.92%      0.28s  6.60%  grantline/internal/target/pgtarget.(*Target).Item.func1
+         0     0% 13.92%      0.28s  6.60%  grantline/internal/target/pgtarget.(*piece).exec
+     0.28s  6.60% 20.52%      0.28s  6.60%  internal/runtime/syscall/linux.Syscall6
+         0     0% 20.52%      0.27s  6.37%  runtime.mcall
+     0.15s  3.54% 24.06%      0.27s  6.37%  runtime.tryDeferToSpanScan
+     0.03s  0.71% 24.76%      0.25s  5.90%  github.com/jackc/pgx/v5/pgconn.(*Batch).ExecPrepared
+         0     0% 24.76%      0.25s  5.90%  runtime.gcDrainMarkWorkerDedicated (inline)
+     0.11s  2.59% 27.36%      0.25s  5.90%  runtime.scanObjectsSmall
+     0.03s  0.71% 28.07%      0.24s  5.66%  runtime.mallocgcSmallScanNoHeader
+         0     0% 28.07%      0.24s  5.66%  runtime.schedule
+         0     0% 28.07%      0.23s  5.42%  github.com/jackc/pgx/v5/pgconn.(*PgConn).ExecBatch
+         0     0% 28.07%      0.23s  5.42%  internal/poll.ignoringEINTRIO (inline)
+     0.08s  1.89% 29.95%      0.23s  5.42%  runtime.mallocgcTiny
+     0.03s  0.71% 30.66%      0.23s  5.42%  runtime.newobject
+         0     0% 30.66%      0.23s  5.42%  syscall.Syscall
+     0.01s  0.24% 30.90%      0.22s  5.19%  github.com/jackc/pgx/v5/pgconn.(*PgConn).ExecBatch.func1
+     0.02s  0.47% 31.37%      0.20s  4.72%  github.com/jackc/pgx/v5/pgproto3.(*Bind).Encode
+     0.01s  0.24% 31.60%      0.19s  4.48%  github.com/jackc/pgx/v5/pgconn.(*MultiResultReader).NextResult
+         0     0% 31.60%      0.19s  4.48%  grantline/internal/lsn.LSN.String (inline)
+         0     0% 31.60%      0.19s  4.48%  runtime.findRunnable
+         0     0% 31.60%      0.19s  4.48%  syscall.RawSyscall6
+         0     0% 31.60%      0.18s  4.25%  grantline/internal/target/pgtarget.(*plan).touch
+         0     0% 31.60%      0.18s  4.25%  internal/poll.(*FD).Write
+         0     0% 31.60%      0.18s  4.25%  net.(*conn).Write
+         0     0% 31.60%      0.18s  4.25%  net.(*netFD).Write
+         0     0% 31.60%      0.18s  4.25%  syscall.Write (inline)
+         0     0% 31.60%      0.18s  4.25%  syscall.write
+     0.01s  0.24% 31.84%      0.17s  4.01%  grantline/internal/pgoutput.DecodeRow
+         0     0% 31.84%      0.17s  4.01%  runtime.(*mcache).nextFree
+         0     0% 31.84%      0.17s  4.01%  runtime.markroot.func1
+     0.10s  2.36% 34.20%      0.17s  4.01%  runtime.scanblock
